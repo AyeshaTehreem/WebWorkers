@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './styles.css';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import UserCard from './components/UserCard';
+import './App.css';
 
-export default function App() {
+const App = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -39,40 +42,44 @@ export default function App() {
       }
       setUsers(data.data);
       setLoading(false);
+      worker.terminate();
     };
 
     worker.postMessage(null);
   };
 
   return (
-    <div className="App p-8">
-      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow p-6">
-        <h1 className="text-2xl font-bold mb-6">User Data Fetcher</h1>
-        
-        <button 
-          onClick={handleFetchUsers}
-          disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded mb-6 w-full hover:bg-blue-700 disabled:opacity-50"
-        >
-          {loading ? 'Fetching Users...' : 'Fetch Users'}
-        </button>
+    <div className="app-container">
+      <Navbar />
+      
+      <main className="main-content">
+        <div className="card-container">
+          <h1 className="title">User Directory</h1>
+          
+          <button 
+            onClick={handleFetchUsers}
+            disabled={loading}
+            className="fetch-button"
+            aria-label={loading ? 'Loading users' : 'Fetch users'}
+          >
+            {loading ? 'Fetching Users...' : 'Fetch Users'}
+          </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {users.map(user => (
-            <div key={user.id} className="border rounded-lg p-4 hover:shadow-lg transition-shadow">
-              <img 
-                src={user.avatar} 
-                alt={user.first_name}
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-              />
-              <h3 className="font-semibold text-center">
-                {user.first_name} {user.last_name}
-              </h3>
-              <p className="text-gray-600 text-center">{user.email}</p>
-            </div>
-          ))}
+          <div className="users-container">
+            {users.length > 0 && (
+              <div className="users-grid">
+                {users.map(user => (
+                  <UserCard key={user.id} user={user} />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </main>
+
+      <Footer />
     </div>
   );
-}
+};
+
+export default App;

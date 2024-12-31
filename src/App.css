@@ -1,38 +1,312 @@
-.App {
+/* Reset margin and padding for html and body */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+:root {
+  /* Cyberpunk Theme */
+  --primary: #ff007f; /* Neon Pink */
+  --primary-light: #ff4da6;
+  --primary-dark: #cc0066;
+
+  --secondary: #00e6e6; /* Neon Cyan */
+  --secondary-light: #33f0f0;
+  --secondary-dark: #00b2b2;
+
+  --accent: #ffff00; /* Electric Yellow */
+  --accent-light: #ffff66;
+  --accent-dark: #cccc00;
+
+  --background: #0d0d0d; /* Deep Black */
+  --card-bg: #1a1a1a; /* Very Dark Gray */
+  --text-primary: #eaeaea; /* Soft White */
+  --text-secondary: #b3b3b3; /* Light Gray */
+  --border: #333333; /* Subtle Border Gray */
+
+  /* Neon Glow Shadows */
+  --shadow-sm: 0 2px 4px rgba(255, 0, 127, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 230, 230, 0.2),
+    0 2px 4px rgba(255, 0, 127, 0.3);
+  --shadow-lg: 0 10px 15px rgba(255, 0, 127, 0.4),
+    0 4px 6px rgba(0, 230, 230, 0.3);
+
+  /* Smooth Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-container {
+  min-height: 100vh; /* Ensures full viewport height */
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  background-image: radial-gradient(
+      circle at top right,
+      rgba(255, 111, 97, 0.05),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(0, 191, 174, 0.05),
+      transparent 50%
+    );
+  margin: 0; /* Remove any unwanted margins */
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.users-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fetch-button {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: white;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 3rem;
+  display: block;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.fetch-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+  opacity: 0;
+  transition: var(--transition-normal);
+}
+
+.fetch-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.fetch-button:hover:not(:disabled)::after {
+  opacity: 1;
+}
+
+.fetch-button:disabled {
+  background: var(--primary-light);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@media (max-width: 1024px) {
+  /* Tablet and smaller screens */
+  .users-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    gap: 1.5rem;
+  }
+
+  .title {
+    font-size: 2.2rem; /* Slightly smaller title */
+    margin-bottom: 2rem;
+  }
+
+  .fetch-button {
+    max-width: 250px; /* Smaller fetch button on tablet */
+    font-size: 1rem; /* Adjust font size */
+  }
+
+  .user-card {
+    width: 250px; /* Smaller card width */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Landscape mobile devices */
+  .users-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on landscape mobile */
+    gap: 1.5rem;
+  }
+
+  .user-card {
+    width: 230px; /* Slightly smaller cards */
+  }
+
+  .fetch-button {
+    max-width: 220px; /* Smaller fetch button */
+    font-size: 0.95rem; /* Adjust font size */
+  }
+}
+
+@media (max-width: 640px) {
+  /* Portrait mobile devices */
+  .users-grid {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+    gap: 1.25rem;
+  }
+
+  .main-content {
+    padding: 1.5rem 0.5rem; /* Smaller padding on mobile */
+  }
+
+  .title {
+    font-size: 1.8rem; /* Smaller title for mobile */
+    margin-bottom: 1.5rem;
+  }
+
+  .fetch-button {
+    max-width: 200px; /* Smaller button width */
+    font-size: 0.9rem; /* Adjust font size */
+  }
+
+  .user-card {
+    width: 100%; /* Full width cards */
+    padding: 16px;
+  }
+}
+
+/* Card Styles */
+.user-card {
+  width: 288px;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transform: rotate(-2deg);
+  transform-origin: center center;
+}
+
+.gradient-border {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  opacity: 0.1;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.card-content {
+  position: relative;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+  transform: rotate(2deg);
+}
+
+.avatar-container {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 24px;
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: 50%;
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}
+
+.user-avatar {
+  position: absolute;
+  inset: 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 8px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--card-bg);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+}
+
+.user-info {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.user-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+  transition: color 0.3s ease;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.user-email {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Hover Effects */
+.user-card:hover {
+  transform: translateY(-5px) rotate(-2deg);
+  box-shadow: var(--shadow-lg);
+}
+
+.user-card:hover .gradient-border {
+  opacity: 0.2;
+}
+
+.user-card:hover .user-avatar {
+  transform: scale(1.05);
+}
+
+.user-card:hover .avatar-ring {
+  opacity: 0.4;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-2deg);
+  }
+  100% {
+    transform: translateY(0) rotate(-2deg);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Apply the float animation to user-card */
+.user-card {
+  animation: float 3s ease-in-out infinite;
 }
