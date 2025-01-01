@@ -41,7 +41,7 @@ body {
 }
 
 .app-container {
-  min-height: 100vh; /* Ensures full viewport height */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: var(--background);
@@ -55,7 +55,7 @@ body {
       rgba(0, 191, 174, 0.05),
       transparent 50%
     );
-  margin: 0; /* Remove any unwanted margins */
+  margin: 0;
 }
 
 .main-content {
@@ -106,15 +106,19 @@ body {
 }
 
 .fetch-button::after {
-  content: "";
+  content: "Fetch Users"; /* The text that will appear on hover */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
   transition: var(--transition-normal);
+  z-index: 1;
 }
 
 .fetch-button:hover:not(:disabled) {
@@ -133,180 +137,64 @@ body {
 }
 
 @media (max-width: 1024px) {
-  /* Tablet and smaller screens */
   .users-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 
   .title {
-    font-size: 2.2rem; /* Slightly smaller title */
+    font-size: 2.2rem;
     margin-bottom: 2rem;
   }
 
   .fetch-button {
-    max-width: 250px; /* Smaller fetch button on tablet */
-    font-size: 1rem; /* Adjust font size */
+    max-width: 250px;
+    font-size: 1rem;
   }
 
   .user-card {
-    width: 250px; /* Smaller card width */
+    width: 250px;
   }
 }
 
 @media (max-width: 768px) {
-  /* Landscape mobile devices */
   .users-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on landscape mobile */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 
   .user-card {
-    width: 230px; /* Slightly smaller cards */
+    width: 230px;
   }
 
   .fetch-button {
-    max-width: 220px; /* Smaller fetch button */
-    font-size: 0.95rem; /* Adjust font size */
+    max-width: 220px;
+    font-size: 0.95rem;
   }
 }
 
 @media (max-width: 640px) {
-  /* Portrait mobile devices */
   .users-grid {
-    grid-template-columns: 1fr; /* 1 column on mobile */
+    grid-template-columns: 1fr;
     gap: 1.25rem;
   }
 
   .main-content {
-    padding: 1.5rem 0.5rem; /* Smaller padding on mobile */
+    padding: 1.5rem 0.5rem;
   }
 
   .title {
-    font-size: 1.8rem; /* Smaller title for mobile */
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
   }
 
   .fetch-button {
-    max-width: 200px; /* Smaller button width */
-    font-size: 0.9rem; /* Adjust font size */
+    max-width: 200px;
+    font-size: 0.9rem;
   }
 
   .user-card {
-    width: 100%; /* Full width cards */
+    width: 100%;
     padding: 16px;
   }
-}
-
-/* Card Styles */
-.user-card {
-  width: 288px;
-  background-color: var(--card-bg);
-  border-radius: 16px;
-  padding: 24px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transform: rotate(-2deg);
-  transform-origin: center center;
-}
-
-.gradient-border {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  opacity: 0.1;
-  filter: blur(8px);
-  transition: opacity 0.3s ease;
-}
-
-.card-content {
-  position: relative;
-  background-color: var(--card-bg);
-  border-radius: 12px;
-  padding: 16px;
-  transform: rotate(2deg);
-}
-
-.avatar-container {
-  position: relative;
-  width: 128px;
-  height: 128px;
-  margin: 0 auto 24px;
-}
-
-.avatar-ring {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  border-radius: 50%;
-  opacity: 0.2;
-  transition: opacity 0.3s ease;
-}
-
-.user-avatar {
-  position: absolute;
-  inset: 4px;
-  width: calc(100% - 8px);
-  height: calc(100% - 8px);
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--card-bg);
-  box-shadow: var(--shadow-md);
-  transition: transform 0.3s ease;
-}
-
-.user-info {
-  text-align: center;
-}
-
-.user-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 12px;
-  transition: color 0.3s ease;
-}
-
-.user-email {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  margin: 0;
-  transition: color 0.3s ease;
-}
-
-/* Hover Effects */
-.user-card:hover {
-  transform: translateY(-5px) rotate(-2deg);
-  box-shadow: var(--shadow-lg);
-}
-
-.user-card:hover .gradient-border {
-  opacity: 0.2;
-}
-
-.user-card:hover .user-avatar {
-  transform: scale(1.05);
-}
-
-.user-card:hover .avatar-ring {
-  opacity: 0.4;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0) rotate(-2deg);
-  }
-  50% {
-    transform: translateY(-5px) rotate(-2deg);
-  }
-  100% {
-    transform: translateY(0) rotate(-2deg);
-  }
-}
-
-/* Apply the float animation to user-card */
-.user-card {
-  animation: float 3s ease-in-out infinite;
 }

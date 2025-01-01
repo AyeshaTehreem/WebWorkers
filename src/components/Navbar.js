@@ -8,10 +8,10 @@ const Navbar = () => {
         {/* Logo Section */}
         <div className="logo-container">
           <div className="logo">
-            U
+            W
           </div>
           <span className="brand-name">
-            UserFetch
+            WebWorkers
           </span>
         </div>
 

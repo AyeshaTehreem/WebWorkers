@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-grid">
           <div>
-            <h3 className="footer-section-title">About UserFetch</h3>
+            <h3 className="footer-section-title">About WebWorkers</h3>
             <p className="footer-text">
               A modern user directory application with beautiful UI and smooth interactions.
             </p>
@@ -30,7 +30,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2024 UserFetch. All rights reserved.</p>
+          <p>© 2024 WebWorkers. All rights reserved.</p>
         </div>
       </div>
     </footer>
